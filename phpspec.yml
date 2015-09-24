@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Foobooks
+        psr4_prefix: Foobooks
+        src_path: app
