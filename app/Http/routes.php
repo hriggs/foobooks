@@ -21,5 +21,8 @@ Route::get('/', function () {
 Route::controller('/books','BookController');
 
 Route::get('/practice', function() {
-    echo config('app.debug');
+	$random = new Rych\Random\Random();
+   return $random->getRandomString(8);
 });
+
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
