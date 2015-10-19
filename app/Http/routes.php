@@ -14,8 +14,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 // Route::get('/books', 'BookController@getIndex');
-// Route::get('/books/show/{title}', 'BookController@getShow');
-// Route::get('/books/create', 'BookController@getCreate');
+Route::get('/books/show/{title?}', 'BookController@getShow');
+//Route::get('/books/create', 'BookController@getCreate');
 // Route::post('/books/create', 'BookController@postCreate');
 
 Route::controller('/books','BookController');
