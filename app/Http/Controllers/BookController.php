@@ -58,9 +58,9 @@ class BookController extends Controller {
 
 		# Set the parameters
 		# Note how each parameter corresponds to a field in the table
-		$book->title = 'Harry Potter';
-		$book->author = 'J.K. Rowling';
-		$book->published = 1997;
+		$book->title = 'Early book';
+		$book->author = 'Bell Hooks';
+		$book->published = 1900;
 		$book->cover = 'http://prodimage.images-bn.com/pimages/9780590353427_p0_v1_s484x700.jpg';
 		$book->purchase_link = 'http://www.barnesandnoble.com/w/harry-potter-and-the-sorcerers-stone-j-k-rowling/1100036321?ean=9780590353427';
 
@@ -134,4 +134,99 @@ class BookController extends Controller {
     		return "Can't delete - Book not found.";
 		}
      }
+     
+     /**
+      * Show the last 5 books that were added to the books table.
+      */ 
+      public function getLastFive() {
+      
+      	// get last five books
+      	$books = \App\Book::orderBy('id', 'desc')->get(); 
+      	
+      	$counter = 0;
+      	
+      	// Output the books
+   		foreach($books as $book) {
+   			
+   			if ($counter < 5) {
+        		echo $book->title.'<br>';
+        		$counter++; 
+        	} else {
+        		break;
+        	} 
+    	}
+      }
+      
+      /**
+       * Retrieve all the books published after 1950.
+       */
+       public function getNewBooks() {
+			
+			// retrieve all the books published after 1950.
+			$books = \App\Book::where("published",">",1950)->get();
+			
+       		// Output the books
+   			foreach($books as $book) {
+        		echo $book->title.'<br>'; 
+    		}
+       }
+       
+      /**
+       * Retrieve all the books in alphabetical order by title.
+       */
+       public function getAlphaOrder() {
+       	
+       		// sort by alpha order
+       		$books = \App\Book::orderBy("title", "asc")->get();
+       		
+       		// Output the books
+   			foreach($books as $book) {
+        		echo $book->title.'<br>'; 
+    		}
+       }
+       
+	/**
+	 * Retrieve all the books in descending order according to published date.
+	 */
+	 public function getPubDate() {
+	 	
+	 	    // sort by alpha order
+       		$books = \App\Book::orderBy("published", "desc")->get();
+       		
+       		// Output the books
+   			foreach($books as $book) {
+        		echo $book->title.'<br>'; 
+    		}
+	 }
+	 
+	 /**
+	  * Find any books by the author Bell Hooks and update the author name to be bell hooks (lowercase).
+	  */
+	  public function getUpdateAuthor() {
+	  	
+	  		// find books
+	  		$books = \App\Book::where("author","=","Bell Hooks")->get();
+	  		
+	  		// update all authors
+	  		foreach($books as $book) {
+        		$book->author = "bell hooks"; 
+        		
+        		// Save the changes
+    			$book->save();
+    		}
+	  }
+	  
+	  /**
+	   * Remove any books by the author “J.K. Rowling”.
+	   */ 
+	  public function getRemoveRowling() {
+	  
+	  		// find Rowling books
+	  		$books = \App\Book::where("author","=","J.K. Rowling")->get();
+	  		
+	  		// delete books
+	  		foreach($books as $book) {
+        		$book->delete(); 
+    		}	
+	  }
 }
