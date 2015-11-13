@@ -20,6 +20,13 @@ such as a page specific styesheets.
 	<form method='POST' action='/books/create'>
     	<input type='hidden' name='_token' value='{{ csrf_token() }}'>
    	 <input type='text' name='title'>
+   	 @if($errors->get('title'))
+   		 <ul>
+          	@foreach($errors->get('title') as $error)
+          		<li>{{ $error }}</li>
+        	 	@endforeach
+    		 </ul>
+		@endif
    	 <input type='submit' value='Submit'>
 	</form>
 @stop
